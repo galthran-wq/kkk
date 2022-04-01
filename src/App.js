@@ -7,10 +7,10 @@ function App() {
   return (
       <div className="App">
           <Container>
-              <Row>
+              <Row className="mb-3">
                   <Header />
               </Row>
-              <Row>
+              <Row className={'margi'}>
                   <Outlet/>
               </Row>
           </Container>

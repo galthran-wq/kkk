@@ -1,11 +1,10 @@
-import classes from './Header.module.css';
-import NavItem from "./NavItem";
 import {useSelector} from "react-redux";
 import getUserId from "../selectors";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 function Header() {
-    let routes = ['/', '/home', '/dialogues'];
+    let routes = ['/home', '/dialogues'];
     const userId = useSelector(getUserId);
 
     if (!userId) {
@@ -25,9 +24,9 @@ function Header() {
 
         rows.push(
             <Nav.Link
+                as={Link}
                 key={i}
-                to
-                href={routes[i]}
+                to={routes[i]}
             >{routeName}</Nav.Link>
         );
     }
@@ -40,8 +39,6 @@ function Header() {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
                   {rows}
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#link">Link</Nav.Link>
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

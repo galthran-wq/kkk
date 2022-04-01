@@ -1,0 +1,27 @@
+.nav {
+    width: auto;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.nav .item {
+    vertical-align: center;
+    padding: 10px;
+    border: solid 1px red;
+    border-radius: 5px;
+    color: darkred;
+}
+
+.nav .logo {
+    position: absolute;
+    left: -60px;
+    top: 0;
+    width: 60px;
+    height: 60px;
+}

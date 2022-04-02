@@ -1,5 +1,4 @@
 export function getDialogues(state) {
-    console.log(12123123);
     return state.dialogues;
 }
 

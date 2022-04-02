@@ -3,23 +3,24 @@ import {SET_DIALOGUES, SET_DIALOGUE} from "../actions/types";
 export default function dialogueReducer(state = [], action) {
     switch (action.type) {
         case SET_DIALOGUE:
+            // problem that it doesn't update
             const newDialogue = action.payload;
-            if (action.type === SET_DIALOGUE && newDialogue) {
-                if (state.dialogues) {
-                    const dialogueIndex = state.dialogues.findIndex(dialogue => dialogue.id === newDialogue.id);
+            if (newDialogue) {
+                if (state) {
+                    const dialogueIndex = state.findIndex(dialogue => dialogue.id === newDialogue.id);
                     if (dialogueIndex !== -1) {
-                        state.dialogues[dialogueIndex] = newDialogue;
-                    } else {
-                        state.dialogues.push(newDialogue);
+                        state.splice(dialogueIndex, 1);
                     }
-                } else {
-                    state.dialogues = [newDialogue];
+
                 }
+                state = [...state, newDialogue];
+                console.log(state);
             }
+            console.log(state, newDialogue);
             break;
         case SET_DIALOGUES:
             if (action.payload) {
-                state.push(...action.payload)
+                state = action.payload;
                 return state;
             }
             break;

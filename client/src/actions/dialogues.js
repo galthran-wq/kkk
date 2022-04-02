@@ -1,5 +1,14 @@
 import {SET_DIALOGUE, SET_DIALOGUES} from "./types";
 import axios from "axios";
+import getUserId from "../selectors";
+import {useSelector} from "react-redux";
+
+const config = {
+  // headers: {
+  //   "Access-Control-Allow-Origin": "*",
+  //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+  // }
+};
 
 export function setDialogues(dialogues) {
     return {type: SET_DIALOGUES, payload: dialogues}
@@ -12,7 +21,7 @@ export function setDialogue(dialogue) {
 export const getDialoguesAction = () => async dispatch => {
 
     try {
-        const res = await axios.get(`http://localhost:3003/dialogues`)
+        const res = await axios.get(`http://localhost:3003/dialogues`, config)
         dispatch(setDialogues(res.data))
     } catch (e) { console.log(e); }
     // catch(e){
@@ -26,8 +35,42 @@ export const getDialoguesAction = () => async dispatch => {
 export const getDialogue = (id) => async dispatch => {
 
     try {
-        const res = await axios.get(`http://localhost:3003/dialogues/` + id)
+        const res = await axios.get(`http://localhost:3003/dialogues/` + id, config)
         dispatch(setDialogue(res.data))
+    } catch (e) { console.log(e); }
+
+}
+
+export const addDialogue = (name, content, onSuccess) => async (dispatch, state) => {
+    // todo add teacher field
+     // todo i am passed the state as a
+    //  second argument, however it is not an object
+    // const currentUserId = getUserId(state);
+
+    try {
+        const res = await axios.post(`http://localhost:3003/dialogues/`, {
+            name, content
+        }, config);
+        dispatch(setDialogue(res.data));
+        // todo mb pass smth
+        onSuccess();
+    } catch (e) { console.log(e); }
+
+}
+
+export const editDialogue = (id, name, content, onSuccess) => async (dispatch, state) => {
+    // todo add teacher field
+     // todo i am passed the state as a
+    //  second argument, however it is not an object
+    // const currentUserId = getUserId(state);
+
+    try {
+        const res = await axios.patch(`http://localhost:3003/dialogues/` + id, {
+            name, content
+        }, config);
+        dispatch(setDialogue(res.data));
+        // todo mb pass smth
+        onSuccess();
     } catch (e) { console.log(e); }
 
 }

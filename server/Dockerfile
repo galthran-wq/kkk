@@ -1,10 +1,4 @@
-FROM node:alpine
-RUN mkdir -p /opt/app
-WORKDIR /opt/app
-RUN adduser -S app
-COPY . .
-RUN npm install
-RUN chown -R app /opt/app
-USER app
-EXPOSE 3003
-CMD [ "npm", "run", "start" ]
+FROM openjdk
+COPY service/build/libs/service.jar service.jar
+EXPOSE 8080
+CMD java ${JAVA_OPTS} -jar service.jar

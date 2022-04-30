@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux";
-import getUserId from "../selectors";
+import {getUserId} from "../selectors";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {Link} from "react-router-dom";
 

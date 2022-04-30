@@ -1,6 +1,6 @@
 import {SET_DIALOGUES, SET_DIALOGUE} from "../actions/types";
 
-export default function dialogueReducer(state = [], action) {
+export default function dialoguesReducer(state = [], action) {
     switch (action.type) {
         case SET_DIALOGUE:
             // problem that it doesn't update

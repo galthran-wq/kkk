@@ -1,12 +1,13 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux'
-import dialogueReducer from "./reducers/dialogues";
+import dialoguesReducer from "./reducers/dialogues";
 import thunk from "redux-thunk";
+import usersReducer from "./reducers/users";
 
 const createAppStore = (initialState) =>
   createStore(
     combineReducers({
-        dialogues: dialogueReducer,
-        user: (state = {}) => state
+        dialogues: dialoguesReducer,
+        user: usersReducer,
     }),
     initialState,
       applyMiddleware(thunk)
@@ -15,7 +16,11 @@ const createAppStore = (initialState) =>
 export default createAppStore({
   user: {
     id: null,
-    name: 'Anonymous',
-    roles: [],
+    username: 'Anonymous',
+    email: null,
+    token: null,
+    bio: null,
+    image: null,
+      isTeacher: false,
   }
 })

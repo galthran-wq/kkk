@@ -1,5 +1,6 @@
 import {SET_DIALOGUE, SET_DIALOGUES} from "./types";
 import axios from "axios";
+import {CONSTRUCT_URL} from "./init";
 import getUserId from "../selectors";
 import {useSelector} from "react-redux";
 
@@ -21,7 +22,7 @@ export function setDialogue(dialogue) {
 export const getDialoguesAction = () => async dispatch => {
 
     try {
-        const res = await axios.get(`http://localhost:3003/dialogues`, config)
+        const res = await axios.get(CONSTRUCT_URL('dialogues'), config)
         dispatch(setDialogues(res.data))
     } catch (e) { console.log(e); }
     // catch(e){
@@ -35,7 +36,7 @@ export const getDialoguesAction = () => async dispatch => {
 export const getDialogue = (id) => async dispatch => {
 
     try {
-        const res = await axios.get(`http://localhost:3003/dialogues/` + id, config)
+        const res = await axios.get(CONSTRUCT_URL(`dialogues/${id}`), config)
         dispatch(setDialogue(res.data))
     } catch (e) { console.log(e); }
 
@@ -48,7 +49,7 @@ export const addDialogue = (name, content, onSuccess) => async (dispatch, state)
     // const currentUserId = getUserId(state);
 
     try {
-        const res = await axios.post(`http://localhost:3003/dialogues/`, {
+        const res = await axios.post(CONSTRUCT_URL(`dialogues`), {
             name, content
         }, config);
         dispatch(setDialogue(res.data));
@@ -65,7 +66,7 @@ export const editDialogue = (id, name, content, onSuccess) => async (dispatch, s
     // const currentUserId = getUserId(state);
 
     try {
-        const res = await axios.patch(`http://localhost:3003/dialogues/` + id, {
+        const res = await axios.patch(CONSTRUCT_URL(`dialogues`), {
             name, content
         }, config);
         dispatch(setDialogue(res.data));

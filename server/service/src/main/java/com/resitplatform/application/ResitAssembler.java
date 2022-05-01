@@ -4,6 +4,7 @@ import com.resitplatform.api.dto.ProfileDto;
 import com.resitplatform.api.dto.ResitDto;
 import com.resitplatform.domain.model.Resit;
 import com.resitplatform.domain.model.User;
+import org.springframework.context.annotation.Profile;
 
 public class ResitAssembler {
     public static ResitDto assemble(Resit resit) {
@@ -18,7 +19,7 @@ public class ResitAssembler {
         return ResitDto.builder()
                 .id(resit.getId())
                 .slug(resit.getSlug())
-                .teacherName(resit.getResponsibleTeacher().getUsername())
+                .teacher(ProfileAssembler.assemble(resit.getResponsibleTeacher()))
                 .name(resit.getName())
                 .startDate(resit.getStartDate())
                 .hasEnded(resit.getHasEnded())

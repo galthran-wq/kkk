@@ -37,6 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         AbstractAuthenticationToken authentication = anonymous();
 
+        // todo it never check for expiration -- the token is everlasting
         if (tokenParts.length > 1) {
             String subject = jwtService.getSubject(tokenParts[1]);
             Optional<User> userOptional = userRepository.findByUsername(subject);

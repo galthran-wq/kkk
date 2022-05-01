@@ -17,7 +17,7 @@ public class ResitDto {
     private UUID id;
     private String slug;
     private String name;
-    private String teacherName;
+    private ProfileDto teacher;
     @JsonFormat(pattern = "yyyy-MM-dd@HH:mm")
     private Date startDate;
     private Boolean hasEnded;

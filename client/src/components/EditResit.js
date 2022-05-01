@@ -1,23 +1,23 @@
 import {Button, Form} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {editDialogue} from "../actions/dialogues";
+import {editResit} from "../actions/resits";
 import {useState} from "react";
-import {getDialogue} from "../selectors/dialogues";
+import {getResit} from "../selectors/resits";
 
-export default function EditDialogue(props) {
-    const currentDialogueId = props.id;
-    const currentDialogue = useSelector(getDialogue(currentDialogueId));
-    console.log(currentDialogue, currentDialogueId);
+export default function EditResit(props) {
+    const currentResitId = props.id;
+    const currentResit = useSelector(getResit(currentResitId));
+    console.log(currentResit, currentResitId);
     const dispatch = useDispatch();
-    let [name, changeName] = useState(currentDialogue.name);
-    let [content, changeContent] = useState(currentDialogue.content);
+    let [name, changeName] = useState(currentResit.name);
+    let [content, changeContent] = useState(currentResit.content);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(editDialogue(currentDialogueId, name, content, props.onSuccess));
+        dispatch(editResit(currentResitId, name, content, props.onSuccess));
     }
 
-    // todo the same very thong as in AddDialogue
+    // todo the same very thong as in AddResit
     //  calls for a separate component
     return(
         <Form onSubmit={handleSubmit}>

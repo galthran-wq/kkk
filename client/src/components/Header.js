@@ -4,7 +4,7 @@ import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 function Header() {
-    let routes = ['/home', '/dialogues'];
+    let routes = ['/home', '/resits'];
     const userId = useSelector(getUserId);
 
     if (!userId) {

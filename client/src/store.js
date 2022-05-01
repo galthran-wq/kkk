@@ -1,12 +1,12 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux'
-import dialoguesReducer from "./reducers/dialogues";
 import thunk from "redux-thunk";
 import usersReducer from "./reducers/users";
+import resitsReducer from "./reducers/resits";
 
 const createAppStore = (initialState) =>
   createStore(
     combineReducers({
-        dialogues: dialoguesReducer,
+        resits: resitsReducer,
         user: usersReducer,
     }),
     initialState,

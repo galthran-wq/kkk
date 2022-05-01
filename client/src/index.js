@@ -7,8 +7,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Home from "./routes/Home";
 import Login from "./routes/Login";
-import DialogueEntry from "./routes/DialogueEntry";
-import Dialogues from "./routes/Dialogues";
+import ResitEntry from "./routes/ResitEntry";
+import Resits from "./routes/Resits";
 import store from "./store";
 import {Provider} from "react-redux";
 import Signup from "./routes/Signup";
@@ -21,8 +21,8 @@ ReactDOM.render(
             <Routes>
                 <Route path="/" element={<App />}>
                     <Route path="/home" element={<Home />} />
-                    <Route path="/dialogues" element={<Dialogues />} />
-                    <Route path="/dialogues/:dialogueId" element={<DialogueEntry/>} />
+                    <Route path="/resits" element={<Resits />} />
+                    <Route path="/resits/:resitId" element={<ResitEntry/>} />
                     <Route path="/login" element={<Login/>} />
                     <Route path="/signup" element={<Signup/>} />
                     <Route path="/profile" element={<Profile/>} />

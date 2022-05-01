@@ -1,4 +1,5 @@
 import {Image} from "react-bootstrap";
+import ProfileThumbnail from "./ProfileThumbnail";
 
 export default function ResitDetail(props) {
 
@@ -9,12 +10,15 @@ export default function ResitDetail(props) {
 
             <div>
               <h4>
-                  Resitation {resit.name} <small>conducted by {resit.teacherName}</small>
+                  Resitation {resit.name} <small>conducted by {resit.username}</small>
               </h4>
               <hr />
                 <div className={"float-start p-3"}>
                     <div className={"d-flex flex-column"}>
                         <Image  className={"mb-3"} src={"https://picsum.photos/333/200"}></Image>
+                        <div>
+                            <ProfileThumbnail  />
+                        </div>
                         <div className={"d-flex"}>
                             <b className={"mr-1 d-block"}><small>Participants ({resit.participants.length}):</small></b>
                             <div>
@@ -63,13 +67,7 @@ export default function ResitDetail(props) {
                     <h5><span className="glyphicon glyphicon-time"></span> Post by Jane Dane, Sep 27, 2015.</h5>
                     <h5><span className="label label-danger">Food</span> <span
                         className="label label-primary">Ipsum</span></h5><br/>
-                    <p>Food is my passion. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat.</p>
+                    <p>{resit.description}</p>
                     <br/>
                 </div>
               </div>

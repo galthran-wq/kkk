@@ -7,6 +7,7 @@ import EditResit from "../components/EditResit";
 import {deleteResit, getResitsAction} from "../actions/resits";
 import Header from "../components/Header";
 import ResitDetail from "../components/ResitDetail";
+import {BsFillCalendarCheckFill, BsFillCalendarFill, BsFillPersonFill} from "react-icons/bs";
 
 export default function Resits() {
     const initState = {show: false, id: null};
@@ -20,15 +21,18 @@ export default function Resits() {
     }, []);
     const resits = useSelector(getResits);
 
-    // let resitEntriesLinks = [];
-    // todo resit link component
-    // <Link key={i} to={`/resits/${resits[i].id}`}>
-    //     {resits[i].name}
-    // </Link>
-
     let resitListItems = [];
     let resitDescriptionList = [];
     for (let i = 0; i < resits.length; i++) {
+
+        let statusBadge;
+
+        if (resits[i].hasEnded) {
+            statusBadge = <Badge bg="success"><BsFillCalendarCheckFill/></Badge>;
+        } else {
+            statusBadge = <Badge bg={"info"}><BsFillCalendarFill/> {resits[i].startDate}</Badge>
+        }
+
         resitListItems.push(
             <ListGroup.Item
                 as={"li"}
@@ -41,11 +45,12 @@ export default function Resits() {
                     <div className="fw-bold">
                         {resits[i].name}
                     </div>
-                    conducted by {resits[i].teacherName}
+                    conducted by {resits[i].teacher.username}
                 </div>
-                <Badge bg="primary" pill>
-                  14
+                <Badge bg="secondary" pill>
+                    {resits[i].participants.length} <BsFillPersonFill />
                 </Badge>
+                {statusBadge}
                 {/*todo move those buttons to the actual resit somewhere*/}
                 {/*<Button onClick={*/}
                 {/*    () => setEditResitShow({*/}

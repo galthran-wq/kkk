@@ -14,15 +14,23 @@ const createAppStore = (initialState) =>
       applyMiddleware(thunk)
   )
 
-const userInitialState = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {
-    id: null,
-    username: 'Anonymous',
-    email: null,
-    token: null,
-    bio: null,
-    image: null,
-    isTeacher: false,
+
+// todo i'm not sure whether it is a good way; on action REFRESH_USER i import this initial state
+export const getEmptyUserState = () => {
+    return {
+        id: null,
+        username: 'Anonymous',
+        email: null,
+        token: null,
+        bio: null,
+        image: null,
+        isTeacher: false,
+    }
 }
+// todo precisely, i reckon there is a more suitable way to manipulate local storage, and inter-session token handling
+//      in one place -- in reducers
+//  However, i don't see a clever way to do that
+const userInitialState = {...getEmptyUserState(), token: localStorage.getItem('token')}
 
 const store = createAppStore({
     user: userInitialState

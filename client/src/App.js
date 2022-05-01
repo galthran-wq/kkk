@@ -2,16 +2,20 @@ import './App.css';
 import Header from "./components/Header";
 import { Outlet } from 'react-router-dom';
 import {Container, Row} from "react-bootstrap";
+import Footer from "./components/Footer";
 
 function App() {
   return (
       <div className="App">
-          <Container>
+          <Container className={"d-flex flex-column"}>
               <Row className="mb-3">
                   <Header />
               </Row>
-              <Row className={'margi'}>
+              <Row className={'mb-3'}>
                   <Outlet/>
+              </Row>
+              <Row className={"mt-auto"}>
+                  <Footer />
               </Row>
           </Container>
       </div>

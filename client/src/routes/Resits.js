@@ -1,11 +1,12 @@
-import {Link} from "react-router-dom";
-import {Button, Col, ListGroup, Row, Tab, Modal} from "react-bootstrap";
+import {Button, Col, ListGroup, Row, Tab, Modal, Badge} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {getResits} from "../selectors/resits";
 import {useEffect, useState} from "react";
 import AddResit from "../components/AddResit";
 import EditResit from "../components/EditResit";
-import {getResitsAction} from "../actions/resits";
+import {deleteResit, getResitsAction} from "../actions/resits";
+import Header from "../components/Header";
+import ResitDetail from "../components/ResitDetail";
 
 export default function Resits() {
     const initState = {show: false, id: null};
@@ -18,6 +19,7 @@ export default function Resits() {
         dispatch(getResitsAction());
     }, []);
     const resits = useSelector(getResits);
+
     // let resitEntriesLinks = [];
     // todo resit link component
     // <Link key={i} to={`/resits/${resits[i].id}`}>
@@ -28,25 +30,39 @@ export default function Resits() {
     let resitDescriptionList = [];
     for (let i = 0; i < resits.length; i++) {
         resitListItems.push(
-            <ListGroup.Item action key={i} href={"#link" + i}>
-                {resits[i].name}
-                <Button onClick={
-                    () => setEditResitShow({
-                        show: true, id: resits[i].id
-                    })
-                }>Edit</Button>
-                <Button onClick={
-                    () => setDeleteResitShow({
-                        show: true, id: resits[i].id
-                    })
-                }>Delete</Button>
+            <ListGroup.Item
+                as={"li"}
+                className="d-flex justify-content-between align-items-start"
+                action
+                key={i}
+                href={"#link" + i}
+            >
+                <div className="ms-2 me-auto">
+                    <div className="fw-bold">
+                        {resits[i].name}
+                    </div>
+                    conducted by {resits[i].teacherName}
+                </div>
+                <Badge bg="primary" pill>
+                  14
+                </Badge>
+                {/*todo move those buttons to the actual resit somewhere*/}
+                {/*<Button onClick={*/}
+                {/*    () => setEditResitShow({*/}
+                {/*        show: true, id: resits[i].id*/}
+                {/*    })*/}
+                {/*}>Edit</Button>*/}
+                {/*<Button onClick={*/}
+                {/*    () => setDeleteResitShow({*/}
+                {/*        show: true, id: resits[i].id, slug: resits[i].slug*/}
+                {/*    })*/}
+                {/*}>Delete</Button>*/}
             </ListGroup.Item>
         )
         resitDescriptionList.push(
             <Tab.Pane key={i} eventKey={"#link" + i}>
                 <div>
-                    {resits[i].content}
-
+                    <ResitDetail resit={resits[i]} />
                 </div>
             </Tab.Pane>
         )
@@ -56,10 +72,8 @@ export default function Resits() {
             <Tab.Container defaultActiveKey="#link1">
               <Row>
                 <Col sm={4}>
-                  <ListGroup>
-                      <ListGroup.Item>
-                          <Button onClick={() => setAddResitShow(true)}>Add a resit</Button>
-                      </ListGroup.Item>
+                    <Button onClick={() => setAddResitShow(true)}>Add a resit</Button>
+                    <ListGroup as="ol" numbered>
                       {resitListItems}
                   </ListGroup>
                 </Col>
@@ -90,7 +104,6 @@ export default function Resits() {
             <Modal
                 size="lg"
                 show={editResitShow.show}
-                // todo
                 onHide={() => setEditResitShow({...initState, id: editResitShow.id})}
               >
                 <Modal.Header closeButton>
@@ -120,9 +133,15 @@ export default function Resits() {
                     Close
                   </Button>
                   <Button variant="primary"
-                          onClick={() => setDeleteResitShow({...initState, id: deleteResitShow.id})}
+                          onClick={()=>dispatch(
+                              deleteResit(
+                                  deleteResitShow.id,
+                                  deleteResitShow.slug,
+                                  ()=>setDeleteResitShow({...initState, id: deleteResitShow.id, slug: deleteResitShow.slug})
+                              )
+                          )}
                   >
-                    Save Changes
+                    Confirm Delete
                   </Button>
                 </Modal.Footer>
             </Modal>

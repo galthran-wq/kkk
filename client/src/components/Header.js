@@ -1,16 +1,17 @@
-import {useSelector} from "react-redux";
-import {getUserId} from "../selectors";
+import {useDispatch, useSelector} from "react-redux";
+import {getUserId, getUsername, isUserAuthenticated} from "../selectors";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import {removeUser} from "../actions/users";
 
 function Header() {
+    const dispatch = useDispatch();
     let routes = ['/home', '/resits'];
-    const userId = useSelector(getUserId);
 
-    if (!userId) {
-        routes.push('/signup', '/login');
+    if (useSelector(isUserAuthenticated)) {
+        routes.push();
     } else {
-        routes.push('/profile');
+        routes.push('/signup', '/login');
     }
 
     let rows = [];
@@ -27,7 +28,15 @@ function Header() {
                 as={Link}
                 key={i}
                 to={routes[i]}
-            >{routeName}</Nav.Link>
+                style={{
+                    "display": "flex",
+                    "justifyContent": "center",
+                    "alignContent": "center",
+                    "flexDirection": "column"
+                }}
+            >
+                    {routeName}
+            </Nav.Link>
         );
     }
 
@@ -39,24 +48,27 @@ function Header() {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
                   {rows}
-                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                {/* Profile */}
+                <NavDropdown title={useSelector(getUsername)} id="basic-nav-dropdown">
+                    <NavDropdown.Item
+                        as={Link}
+                        to={'/profile'}
+                    >
+                        Profile
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item
+                        href="#action/3.4"
+                        onClick={() => dispatch(removeUser())}
+                    >Logout</NavDropdown.Item>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
     );
-//         <header className={classes.nav}>
-//             <img className={classes.logo} src='https://www.mirea.ru/upload/medialibrary/281/
-// IIT_colour.jpg' />
-//             {rows}
-//         </header>
-//     );
 }
 
 export default Header;

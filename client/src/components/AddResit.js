@@ -19,7 +19,7 @@ export default function AddResit(props) {
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Course Name</Form.Label>
                 <Form.Control
-                    name="content"
+                    name="name"
                     type="text"
                     placeholder="Enter name"
                     value={name}
@@ -30,7 +30,7 @@ export default function AddResit(props) {
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Start Date</Form.Label>
                 <Form.Control
-                    name="content"
+                    name="startDate"
                     type="date"
                     placeholder="Enter start date"
                     value={startDate}

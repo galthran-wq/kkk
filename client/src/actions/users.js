@@ -1,9 +1,13 @@
 import axios from "axios";
-import {SET_USER} from "./types";
+import {REMOVE_USER, SET_USER} from "./types";
 import {CONSTRUCT_URL} from "./init";
 
 export function setUser(user) {
     return {type: SET_USER, payload: user}
+}
+
+export function removeUser() {
+    return {type: REMOVE_USER}
 }
 
 export const register = (email, name, password, isTeacher, onSuccess) => async dispatch => {
@@ -36,13 +40,7 @@ export const login = (email, password, onSuccess) => async dispatch => {
     } catch (e) { console.log(e); }
 }
 
-// todo
-export const logout = () => async dispatch => {
-
-}
-
 export const refreshUser = () => async dispatch => {
-    console.log(1);
     try {
         const res = await axios.get(CONSTRUCT_URL('user'));
         dispatch(setUser(res.data["user"]));

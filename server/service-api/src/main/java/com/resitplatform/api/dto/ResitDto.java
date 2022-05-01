@@ -7,12 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 public class ResitDto {
+    private UUID id;
     private String slug;
     private String name;
     private String teacherName;

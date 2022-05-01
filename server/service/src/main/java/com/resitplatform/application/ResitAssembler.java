@@ -16,6 +16,7 @@ public class ResitAssembler {
         }
 
         return ResitDto.builder()
+                .id(resit.getId())
                 .slug(resit.getSlug())
                 .teacherName(resit.getResponsibleTeacher().getUsername())
                 .name(resit.getName())

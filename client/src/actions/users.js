@@ -35,3 +35,16 @@ export const login = (email, password, onSuccess) => async dispatch => {
         onSuccess();
     } catch (e) { console.log(e); }
 }
+
+// todo
+export const logout = () => async dispatch => {
+
+}
+
+export const refreshUser = () => async dispatch => {
+    console.log(1);
+    try {
+        const res = await axios.get(CONSTRUCT_URL('user'));
+        dispatch(setUser(res.data["user"]));
+    } catch (e) { console.log(e); }
+}

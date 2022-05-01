@@ -13,8 +13,12 @@ import store from "./store";
 import {Provider} from "react-redux";
 import Signup from "./routes/Signup";
 import Profile from "./routes/Profile";
+import {refreshUser} from "./actions/users";
 
 console.log(store.getState())
+
+store.dispatch(refreshUser());
+
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>

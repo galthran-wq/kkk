@@ -31,7 +31,7 @@ public class Resit {
     private java.util.Date startDate;
     private Boolean hasEnded = Boolean.FALSE;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User responsibleTeacher;
 
     @Singular

@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 function App() {
   return (
       <div className="App">
-          <Container className={"d-flex flex-column"}>
+          <Container className={"d-flex flex-column"} style={{height: 100 + "vh"}}>
               <Row className="mb-3">
                   <Header />
               </Row>

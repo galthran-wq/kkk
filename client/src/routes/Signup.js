@@ -12,7 +12,7 @@ export default function Signup() {
     let [email, changeEmail] = useState("");
     let [name, changeName] = useState("");
     let [password, changePassword] = useState("");
-    let [isTeacher, changeIsTeacher] = useState("");
+    let [isTeacher, changeIsTeacher] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();

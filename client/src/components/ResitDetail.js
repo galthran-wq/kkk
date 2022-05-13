@@ -4,13 +4,14 @@ import ProfileThumbnail from "./ProfileThumbnail";
 export default function ResitDetail(props) {
 
     const resit = props.resit;
+    console.log(resit)
 
     return (
         <div>
 
             <div>
               <h4>
-                  Resitation {resit.name} <small>conducted by {resit.username}</small>
+                  Resitation {resit.name} <small>conducted by {resit.teacher.username}</small>
               </h4>
               <hr />
                 <div className={"float-start p-3"}>
@@ -63,13 +64,16 @@ export default function ResitDetail(props) {
                     </div>
                 </div>
                 <div className={""}>
-                    <h2>I Love Food</h2>
-                    <h5><span className="glyphicon glyphicon-time"></span> Post by Jane Dane, Sep 27, 2015.</h5>
+                    <h2>{resit.name}</h2>
+                    <h5><span className="glyphicon glyphicon-time"></span> Starting on {resit.startDate}</h5>
                     <h5><span className="label label-danger">Food</span> <span
                         className="label label-primary">Ipsum</span></h5><br/>
                     <p>{resit.description}</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam nobis quae quidem rem? Atque, eius eveniet. Nam nobis nulla quas quod recusandae sequi. Dignissimos esse molestiae pariatur, porro quas qui reprehenderit. Dicta eos magnam recusandae saepe! Aliquid assumenda at beatae culpa dolore, dolorem enim eos explicabo fugit itaque laudantium natus officiis perspiciatis provident repudiandae unde ut voluptatibus voluptatum! Accusamus adipisci aspernatur at aut consectetur delectus, distinctio dolorem ea eum, hic quasi quo tenetur. Ab aspernatur at, commodi corporis cupiditate deserunt distinctio dolor, ea itaque iure maxime minima minus possimus praesentium repellendus temporibus voluptatem. Est laboriosam minima natus nesciunt qui voluptas!</p>
                     <br/>
                 </div>
+                <h4>Results</h4>
+                <hr/>
               </div>
         </div>
     )

@@ -10,10 +10,7 @@ import ResitDetail from "../components/ResitDetail";
 import {BsFillCalendarCheckFill, BsFillCalendarFill, BsFillPersonFill} from "react-icons/bs";
 
 export default function Resits() {
-    const initState = {show: false, id: null};
     const [addResitShow, setAddResitShow] = useState(false);
-    const [editResitShow, setEditResitShow] = useState(initState);
-    const [deleteResitShow, setDeleteResitShow] = useState(initState);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -52,16 +49,6 @@ export default function Resits() {
                 </Badge>
                 {statusBadge}
                 {/*todo move those buttons to the actual resit somewhere*/}
-                {/*<Button onClick={*/}
-                {/*    () => setEditResitShow({*/}
-                {/*        show: true, id: resits[i].id*/}
-                {/*    })*/}
-                {/*}>Edit</Button>*/}
-                {/*<Button onClick={*/}
-                {/*    () => setDeleteResitShow({*/}
-                {/*        show: true, id: resits[i].id, slug: resits[i].slug*/}
-                {/*    })*/}
-                {/*}>Delete</Button>*/}
             </ListGroup.Item>
         )
         resitDescriptionList.push(
@@ -106,50 +93,6 @@ export default function Resits() {
                 </Modal.Body>
             </Modal>
 
-            <Modal
-                size="lg"
-                show={editResitShow.show}
-                onHide={() => setEditResitShow({...initState, id: editResitShow.id})}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>Modal heading</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <EditResit
-                        id={editResitShow.id}
-                        onSuccess={()=>setEditResitShow({...initState, id: editResitShow.id})} />
-                </Modal.Body>
-            </Modal>
-
-            <Modal
-                show={deleteResitShow.show}
-                onHide={() => setDeleteResitShow(initState)}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>Modal heading</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    Woohoo, you're reading this text in a modal!
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary"
-                          onClick={() => setDeleteResitShow({...initState, id: deleteResitShow.id})}
-                  >
-                    Close
-                  </Button>
-                  <Button variant="primary"
-                          onClick={()=>dispatch(
-                              deleteResit(
-                                  deleteResitShow.id,
-                                  deleteResitShow.slug,
-                                  ()=>setDeleteResitShow({...initState, id: deleteResitShow.id, slug: deleteResitShow.slug})
-                              )
-                          )}
-                  >
-                    Confirm Delete
-                  </Button>
-                </Modal.Footer>
-            </Modal>
         </div>
 
     )

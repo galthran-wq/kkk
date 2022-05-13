@@ -1,17 +1,115 @@
-import {Image} from "react-bootstrap";
+import {Button, Image, Modal} from "react-bootstrap";
 import ProfileThumbnail from "./ProfileThumbnail";
+import BootstrapTable from "react-bootstrap-table-next";
+import cellEditFactory from "react-bootstrap-table2-editor";
+import {useDispatch, useSelector} from "react-redux";
+import {getUserId, getUsername} from "../selectors";
+import {deleteResit, signOffResitAction, signOnResitAction} from "../actions/resits";
+import EditResit from "./EditResit";
+import {useState} from "react";
 
 export default function ResitDetail(props) {
 
+    const dispatch = useDispatch();
     const resit = props.resit;
+    const currentUserName = useSelector(getUsername);
     console.log(resit)
+
+    const columns = [{
+      dataField: 'id',
+      text: 'Student\'s ID'
+    }, {
+      dataField: 'name',
+      text: 'Student\'s Name'
+    }, {
+      dataField: 'mark',
+      text: 'Student\'s mark'
+    }];
+    const products = [{id: 1, name: "a", mark: 3}]
+
+    let resultTable;
+    if (resit.hasEnded && resit.teacher.username === currentUserName) {
+        resultTable = <BootstrapTable
+            keyField="id"
+            data={ products }
+            columns={ columns }
+            cellEdit={cellEditFactory({mode: 'click'})}
+        />
+    } else if (resit.hasEnded)
+        resultTable = <BootstrapTable
+            keyField="id"
+            data={ products }
+            columns={ columns }
+        />
+    else
+        resultTable = <p>The results of the recitation will be shown here!</p>
+
+    let signOnOffButton;
+    if (
+        resit.teacher.username !== currentUserName &&
+        !resit.hasEnded
+    ) {
+        if (resit.participants.find(user => user.username === currentUserName)) {
+            signOnOffButton = <Button
+                variant="danger"
+                onClick={
+                    () => dispatch(signOffResitAction(
+                        resit.id,
+                        resit.slug,
+                        ()=> {
+                            //todo show message
+                        }
+                    ))
+                }
+            >
+                SignOff
+            </Button>
+        } else {
+            signOnOffButton = <Button
+                variant="success"
+                onClick={
+                    () => dispatch(signOnResitAction(
+                        resit.id,
+                        resit.slug,
+                        ()=> {
+                            //todo show message
+                        }
+                    ))
+                }
+            >
+                SignOn
+            </Button>
+        }
+    }
+
+    let resitControlPanel;
+    const [editResitShow, setEditResitShow] = useState(false);
+    const [deleteResitShow, setDeleteResitShow] = useState(false);
+    if (resit.teacher.username === currentUserName) {
+        resitControlPanel = <div>
+            <Button
+                onClick={() => setEditResitShow(true)}
+                className={"mx-1"}
+            >
+                Edit</Button>
+            <Button onClick={
+                () => setDeleteResitShow(true)
+            }>Delete</Button>
+        </div>
+    }
 
     return (
         <div>
 
             <div>
-              <h4>
-                  Resitation {resit.name} <small>conducted by {resit.teacher.username}</small>
+                <h4 className={"d-flex justify-content-between"}>
+                  <div>
+                      Resitation {resit.name} <small>conducted by {resit.teacher.username}</small>
+                  </div>
+                  <div>
+                      {resitControlPanel}
+                      {signOnOffButton}
+                  </div>
               </h4>
               <hr />
                 <div className={"float-start p-3"}>
@@ -74,7 +172,55 @@ export default function ResitDetail(props) {
                 </div>
                 <h4>Results</h4>
                 <hr/>
+                {resultTable}
               </div>
+
+
+            <Modal
+                size="lg"
+                show={editResitShow}
+                onHide={() => setEditResitShow(false)}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <EditResit
+                        id={resit.id}
+                        onSuccess={()=>setEditResitShow(false)} />
+                </Modal.Body>
+            </Modal>
+
+            <Modal
+                show={deleteResitShow}
+                onHide={() => setDeleteResitShow(false)}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Are you sure you want to delete?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary"
+                            onClick={() => setDeleteResitShow(false)}
+                    >
+                        Close
+                    </Button>
+                    <Button variant="danger"
+                            onClick={()=>dispatch(
+                                deleteResit(
+                                    resit.id,
+                                    resit.slug,
+                                    ()=>setDeleteResitShow(false)
+                                )
+                            )}
+                    >
+                        Confirm Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
         </div>
     )
 }

@@ -1,4 +1,5 @@
 export function getResits(state) {
+    console.log("in get resits", state)
     return state.resits;
 }
 
